@@ -22,16 +22,16 @@ type Event interface {
 }
 
 func (h HwAccepted) String() string {
-	return fmt.Sprintf("%v accepted %v %v", now().Format("2006-01-02"), h.Id, h.Grade)
+	return fmt.Sprintf("accepted %v %v", h.Id, h.Grade)
 }
 
 func (h HwSubmitted) String() string {
-	return fmt.Sprintf("%v submitted %v \"%v\"", now().Format("2006-01-02"), h.Id, h.Comment)
+	return fmt.Sprintf("submitted %v \"%v\"", h.Id, h.Comment)
 }
 
 // for tests
 var now = time.Now
 
 func Log(event Event, writer io.Writer) {
-	fmt.Fprintf(writer, "%v\n", event)
+	fmt.Fprintf(writer, "%v %v\n", now().Format("2006-01-02"), event)
 }
