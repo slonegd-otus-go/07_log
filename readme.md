@@ -18,7 +18,7 @@ type HwSubmitted struct {
     Comment string
 }
 
-interface OtusEvent {
+type OtusEvent interface {
 }
 
 func LogOtusEvent(e OtusEvent, w io.Writer) {
