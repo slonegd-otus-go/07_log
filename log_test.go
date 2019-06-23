@@ -1,4 +1,4 @@
-package log_test
+package otus_test
 
 import (
 	"bytes"
@@ -6,18 +6,18 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	log "github.com/slonegd-otus-go/07_log"
+	otus "github.com/slonegd-otus-go/07_log"
 )
 
 func TestLogOtusEvent(t *testing.T) {
 	tests := []struct {
 		name  string
-		event log.OtusEvent
+		event otus.Event
 		want  string
 	}{
 		{
 			name: "from readme 1",
-			event: log.HwSubmitted{
+			event: otus.HwSubmitted{
 				Id:      3456,
 				Comment: "please take a look at my homework",
 			},
@@ -25,7 +25,7 @@ func TestLogOtusEvent(t *testing.T) {
 		},
 		{
 			name: "from readme 2",
-			event: log.HwAccepted{
+			event: otus.HwAccepted{
 				Id:    3456,
 				Grade: 4,
 			},
@@ -35,7 +35,7 @@ func TestLogOtusEvent(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			writer := &bytes.Buffer{}
-			log.LogOtusEvent(tt.event, writer)
+			otus.Log(tt.event, writer)
 			assert.Equal(t, tt.want, writer.String())
 		})
 	}

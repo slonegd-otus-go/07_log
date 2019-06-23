@@ -1,4 +1,4 @@
-package log
+package otus
 
 import (
 	"io"
@@ -15,9 +15,9 @@ type HwSubmitted struct {
 	Comment string
 }
 
-type OtusEvent interface {
+type Event interface {
 }
 
-func LogOtusEvent(e OtusEvent, w io.Writer) {
+func Log(event Event, writer io.Writer) {
 
 }
