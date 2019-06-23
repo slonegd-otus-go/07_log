@@ -18,43 +18,20 @@ type HwSubmitted struct {
 }
 
 type Event interface {
-	GetID() int
-	GetComment() string
-	GetGrade() int
+	String() string
 }
 
-func (h HwAccepted) GetID() int {
-	return h.Id
+func (h HwAccepted) String() string {
+	return fmt.Sprintf("%v accepted %v %v", now().Format("2006-01-02"), h.Id, h.Grade)
 }
 
-func (h HwAccepted) GetComment() string {
-	return ""
-}
-
-func (h HwAccepted) GetGrade() int {
-	return h.Grade
-}
-
-func (h HwSubmitted) GetID() int {
-	return h.Id
-}
-
-func (h HwSubmitted) GetComment() string {
-	return h.Comment
-}
-
-func (h HwSubmitted) GetGrade() int {
-	return 0
+func (h HwSubmitted) String() string {
+	return fmt.Sprintf("%v submitted %v \"%v\"", now().Format("2006-01-02"), h.Id, h.Comment)
 }
 
 // for tests
 var now = time.Now
 
 func Log(event Event, writer io.Writer) {
-	switch event.(type) {
-	case HwSubmitted:
-		fmt.Fprintln(writer, now().Format("2006-01-02"), "submitted", event.GetID(), `"`+event.GetComment()+`"`)
-	case HwAccepted:
-		fmt.Fprintln(writer, now().Format("2006-01-02"), "accepted", event.GetID(), event.GetGrade())
-	}
+	fmt.Fprintf(writer, "%v\n", event)
 }
